@@ -1,5 +1,7 @@
 # Assignment Week 09
 
+*Worth pointing out that this assignment, because I was a day late providing it to you, is due a day later (Monday).*
+
 ![](Screenshot.png)
 
 There is no UI for this project, only getting all tests to pass.
@@ -57,7 +59,7 @@ Welcome to the **Banking Project**! We will continue this for several weeks.
 1. **`Bank.Logic` (Class Library)**
 2. **`Bank.Logic.Tests` (Unit Tests)**
 
-Your **primary task** is to implement the missing logic inside `Bank.Logic`. You will know you are **done** when **all unit tests pass** successfully.  
+Your **primary task** is to implement the missing logic inside `Bank.Logic`. You will know you are **done** when **all unit tests pass** successfully.   
 
 ### **Final Reminder**
 1. You **must** pass **all unit tests** for your implementation to be correct.  
