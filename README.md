@@ -1,6 +1,8 @@
-# Assignment 02
+# Assignment Week 09
 
-![](Screenshot.gif)
+![](Screenshot.png)
+
+There is no UI for this project, only getting all tests to pass.
 
 ## Universal Acceptance Criteria
 
@@ -14,92 +16,53 @@ This represents acceptance criteria that is true irrespective of assignment crit
 
 This represents acceptance criteria necessary for assignment completion.
 
-1. Show a standard QWERTY keyboard.
-1. Listen for a keypress and respond.
-1. Highlight the key pressed.
-1. Unhighlight any previous key presses.
-1. Handle both upper & lower case keys.
-1. Handle numbers as well as letters.
-1. Handle the space bar (see the screenshot).
-1. Place as much logic as possible in `Client.Library`.
-1. Hide the cursor in the console app.
+### Implement `Account.cs`
+Continue beyond this list to satisfy all unit test.
+
+1. **GetBalance()**: Returns the total balance by summing all transaction amounts. Hint: You can use LINQ’s built-in `.Sum()` method to sum the `Amount` property of all transactions in the internal transactions list.  
+
+1. **GetTransactions()**: Returns a read-only list of all transactions. Hint: You can use the `.AsReadOnly()` method on your internal list to return a read-only version. This requires the `System.Collections.ObjectModel` namespace.  
+
+1. **TryAddTransaction(ITransaction transaction)**: The return value indicates whether the transaction was actually added to the internal list. If a withdrawal results in an overdraft (`Balance() < 0`), an automatic `Fee_Overdraft` transaction should be added. Transactions with the type `Unknown` should always be rejected by returning false. 
+
+### Implement `Transaction.cs`
+
+1. **Amount**: Represents the monetary value of the transaction. If the transaction type returns `true` from `Utilities.InidicatesNegativeAmount()`, the amount must be negative, otherwise, it must be positive. If the amount does not match the expected postive/negative sign, throw an `ArgumentOutOfRangeException`.  
 
 ## Bonus Acceptance Criteria
 
-This represents optional acceptance criteria available for additional learning and bonus. You must complete both.
+Create the **ManagementFee** feature.
 
-1. Every time a key is pressed play a short console beep. 
-1. When I type the key series "password" clear the screen and write "SECRET". *This one task is pretty complex and will be difficult for you to complete. Clearing the screen and writing SECRET after password will require clever logic you might need AI or a friend to help you complete. Fine. Just remember, you need to understand your code. Don't submit a solution you don't understand.*
+**Update Bank.Logic with:**
+1. Add `AccountSettings.ManagementFee`: a public double  property.  
+1. Change `Transaction.Amount`: Ensure `ManagementFee` is negative.  
+1. Change `Account.TryAddTransaction()`: Allow `ManagementFee` transactions.  
+1. Change `Utilities.InidicatesNegativeAmount()`: `ManagementFee` is `true`.  
 
-### Useful information
+**Update `TransactionTests.cs` with:**
+1. CreateTransaction_WithManagementFee_ShouldSetCorrectType();
+1. CreateTransaction_WithPositiveManagementFee_ShouldThrowException();
+1. CreateTransaction_WithNegativeManagementFee_ShouldBeValid();
 
-`Console.ReadKey().Key` lets you read and identify key presses in a C# console application. The `Console.ReadKey()` method waits for the user to press a key and gives back a `ConsoleKeyInfo` object. That object includes details like what key was pressed and whether Shift, Alt, or Ctrl was used. The `.Key` property specifically tells you which key was pressed, using the `ConsoleKey` enum, with values like `Enter`, `Escape`, or `A`. It’s a simple and effective way to handle user input.
+**Update `AccountTests.cs` with:**
+1. TryAddTransaction_WhenAddingManagementFee_ShouldReturnTrue();
+1. GetBalance_WithManagementFeeDeduction_ShouldReturnCorrectTotal();
 
-```csharp
-Console.WriteLine("Press any key:");
-// Reads the keypress as keyInfo metadata
-ConsoleKeyInfo keyInfo = Console.ReadKey(); 
-// Extracts the key itself from keyInfo metadata
-ConsoleKey key = keyInfo.Key; 
-Console.WriteLine($"\nYou pressed: {key}");
-```
+## Instructions
 
-## Getting Started
+Welcome to the **Banking Project**! We will continue this for several weeks. 
 
-1. **Clone Your Repository**
+### You have 2 projects
 
-   - GitHub Classroom: https://classroom.github.com/a/xLLZSm4E
-   - Open the new, local folder
-   
+1. **`Bank.Logic` (Class Library)**
+2. **`Bank.Logic.Tests` (Unit Tests)**
 
-1. **Configure Debugging**
+Your **primary task** is to implement the missing logic inside `Bank.Logic`. You will know you are **done** when **all unit tests pass** successfully.  
 
-   - Open Settings (`Ctrl+,`) and search for `csharp.debug.console`.
-   - Set its value to `externalTerminal`.
+### **Final Reminder**
+1. You **must** pass **all unit tests** for your implementation to be correct.  
+1. Focus on **validating input**, **handling overdrafts**, and **ensuring correct balance calculations**.  
+1. If a test **fails**, **read the test message** and adjust your implementation.  
 
-1. **Create Solution Structure**
+Good luck, and happy coding! 🚀
 
-```text
-Assignment02.sln
-├── .gitignore
-├── .editorconfig
-├── Client
-│   ├── Client.csproj
-│   ├── Program.cs 
-│   └── References: Client.Library
-└── Client.Library
-    ├── Client.Library.csproj
-    └── Class1.cs (Rename to Logic.cs)
-```
-
-This is the command line, try doing it inside VS Code using the user interface. The result is the same, using the UI inside Code just helps you learn how it works. You can always "fall back" to this command line syntax.
-
-```bash
-// create base files
-dotnet new gitignore
-dotnet new editorconfig
-
-// create the projects
-dotnet new console -n Client -o Client
-dotnet new classlib -n Client.Library -o Client.Library
-dotnet add Client/Client.csproj reference Client.Library/Client.Library.csproj
-
-// create the solution
-dotnet new sln -n Assignment02
-dotnet sln Assignment02.sln add Client/Client.csproj
-dotnet sln Assignment02.sln add Client.Library/Client.Library.csproj
-
-// test the app
-dotnet restore
-dotnet build
-dotnet run --project Client
-```
-
-> Unlike the last assignment, do not use the command palette to create debug assets. Running this command creates the `launch.json` and `tasks.json` files in the `.vscode` folder. This is very valuable for sophisticated scenarios, but not ours—this is simple. 
-
-### Now you can do your assignment
-
- * Read the *Acceptance Criteria*!
- * Keep committing your changes with git.
- * Remember to push your final work!
- * Turn in the URL to your repository.
