@@ -5,4 +5,6 @@ namespace Bank.Logic;
 public record class AccountSettings
 {
     public double OverdraftFee { get; set; } = 35.00;
+
+    public double ManagementFee { get; set; } = 10.00;
 }
